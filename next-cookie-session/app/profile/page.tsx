@@ -1,5 +1,9 @@
 import React from "react";
-import { getSession } from "../iron-session/app-router-server-component-and-action/actions";
+import {
+  changePremium,
+  changeUsername,
+  getSession,
+} from "../iron-session/app-router-server-component-and-action/actions";
 import { redirect } from "next/navigation";
 
 type Props = {};
@@ -20,6 +24,19 @@ export default async function Page({}: Props) {
       <span>
         You are a <b>{session.isPro ? "Premium" : "Free"}</b> user
       </span>
+      <form action={changePremium}>
+        <button>{session.isPro ? "Cancel" : "Buy"} Premium</button>
+      </form>
+
+      <form action={changeUsername}>
+        <input
+          type="text"
+          name="username"
+          required
+          placeholder={session.username}
+        />
+        <button>Update</button>
+      </form>
     </div>
   );
 }
