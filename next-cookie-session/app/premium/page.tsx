@@ -1,11 +1,36 @@
+import Link from "next/link";
+import { redirect } from "next/navigation";
 import React from "react";
+import { getSession } from "../iron-session/app-router-server-component-and-action/actions";
 
 type Props = {};
 
-export default function Page({}: Props) {
+export default async function Page({}: Props) {
+  const session = await getSession();
+
+  if (!session.isLoggedIn) {
+    redirect("/");
+  }
+
+  if (!session.isPro) {
+    return (
+      <div className="notPremium">
+        <h1>Only premium users can see the content!</h1>
+        <Link href="/profile">
+          Go to the profile page to upgrade to premium
+        </Link>
+      </div>
+    );
+  }
+
   return (
     <div className="premium">
       <h1>Welcome to the PremiumPage</h1>
+      <ul>
+        <li>Apple</li>
+        <li>Orange</li>
+        <li>Peach</li>
+      </ul>
     </div>
   );
 }
