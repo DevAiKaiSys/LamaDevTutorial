@@ -39,4 +39,8 @@ export const login = async (formData: FormData) => {
   await session.save();
   redirect("/");
 };
-export const logout = async () => {};
+export const logout = async () => {
+  const session = await getSession();
+  session.destroy();
+  redirect("/");
+};
